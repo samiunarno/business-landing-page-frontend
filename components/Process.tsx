@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from "react";
 
 const steps = [
   {
@@ -38,61 +38,73 @@ const Process: React.FC = () => {
     const ScrollTrigger = (window as any).ScrollTrigger;
     gsap.registerPlugin(ScrollTrigger);
 
-    const processSteps = gsap.utils.toArray('.process-step-item');
+    const processSteps = gsap.utils.toArray(".process-step-item");
 
-    // Animate the title
+    // Title fade + lift
     gsap.from(titleRef.current, {
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
+        start: "top 80%",
+        toggleActions: "play none none reverse",
       },
       opacity: 0,
-      y: -50,
-      duration: 0.8,
-      ease: 'power3.out',
+      y: -40,
+      scale: 0.95,
+      duration: 1,
+      ease: "power4.out",
     });
 
-    // Animate the timeline progress bar
-    gsap.from(timelineProgressRef.current, {
-      scrollTrigger: {
-        trigger: timelineContainerRef.current,
-        start: 'top center',
-        end: 'bottom bottom-=150',
-        scrub: true,
-      },
-      scaleY: 0,
-      transformOrigin: 'top center',
-    });
+    // Vertical timeline glowing progress
+    gsap.fromTo(
+      timelineProgressRef.current,
+      { scaleY: 0 },
+      {
+        scaleY: 1,
+        transformOrigin: "top center",
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: timelineContainerRef.current,
+          start: "top 80%",
+          end: "bottom bottom-=100",
+          scrub: true,
+        },
+      }
+    );
 
-    // Animate each step item
+    // Animate steps in stagger
     processSteps.forEach((step: any, index) => {
-      const card = step.querySelector('.process-card');
-      const number = step.querySelector('.process-number');
+      const card = step.querySelector(".process-card");
+      const number = step.querySelector(".process-number");
       const isOdd = index % 2 !== 0;
 
+      // Card 3D float-in
       gsap.from(card, {
         scrollTrigger: {
           trigger: step,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
+          start: "top 85%",
+          toggleActions: "play none none reverse",
         },
-        autoAlpha: 0,
-        x: isOdd ? 50 : -50,
-        duration: 0.8,
-        ease: 'power3.out',
+        opacity: 0,
+        x: isOdd ? 120 : -120,
+        rotateY: isOdd ? 25 : -25,
+        rotateX: 10,
+        duration: 1.2,
+        ease: "power3.out",
       });
 
+      // Number pop-in with glow
       gsap.from(number, {
         scrollTrigger: {
           trigger: step,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
+          start: "top 90%",
+          toggleActions: "play none none reverse",
         },
-        scale: 0.5,
-        autoAlpha: 0,
-        duration: 0.6,
-        ease: 'back.out(1.7)',
+        scale: 0.4,
+        opacity: 0,
+        filter: "blur(4px)",
+        duration: 0.7,
+        ease: "back.out(1.8)",
+        delay: 0.1,
       });
     });
 
@@ -104,12 +116,12 @@ const Process: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 md:py-32 bg-gradient-to-b from-secondary via-secondary/90 to-secondary-foreground/5 text-secondary-foreground overflow-hidden"
+      className="relative py-24 md:py-36 bg-gradient-to-b from-secondary via-secondary/80 to-background text-secondary-foreground overflow-hidden perspective-[1200px]"
     >
       <div className="container mx-auto px-6 max-w-6xl">
-        {/* Title Section */}
-        <div ref={titleRef} className="text-center mb-16 md:mb-24">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-foreground drop-shadow-sm">
+        {/* Title */}
+        <div ref={titleRef} className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-foreground drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]">
             Unser Prozess
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto leading-relaxed">
@@ -118,45 +130,45 @@ const Process: React.FC = () => {
           </p>
         </div>
 
-        {/* Timeline Container */}
+        {/* Timeline */}
         <div ref={timelineContainerRef} className="relative">
-          {/* Timeline track */}
-          <div className="absolute top-0 left-[2.1rem] md:left-1/2 w-[2px] h-full bg-border/60 -translate-x-1/2"></div>
+          {/* Base line */}
+          <div className="absolute top-0 left-[2.1rem] md:left-1/2 w-[2px] h-full bg-border/40 -translate-x-1/2"></div>
 
-          {/* Animated progress line */}
+          {/* Animated glowing progress line */}
           <div
             ref={timelineProgressRef}
-            className="absolute top-0 left-[2.1rem] md:left-1/2 w-[4px] h-full bg-primary/80 rounded-full -translate-x-1/2 shadow-md"
+            className="absolute top-0 left-[2.1rem] md:left-1/2 w-[4px] h-full bg-gradient-to-b from-primary via-primary/80 to-transparent rounded-full shadow-[0_0_20px_rgba(59,130,246,0.6)] -translate-x-1/2"
           ></div>
 
           {/* Steps */}
-          <div className="flex flex-col space-y-20 md:space-y-32 relative z-10">
+          <div className="flex flex-col space-y-24 md:space-y-32 relative z-10">
             {steps.map((step, index) => (
               <div
                 key={index}
                 className={`process-step-item flex flex-col md:flex-row items-center ${
                   index % 2 === 0
-                    ? 'md:justify-start md:text-right'
-                    : 'md:justify-end md:text-left'
+                    ? "md:justify-start md:text-right"
+                    : "md:justify-end md:text-left"
                 }`}
               >
                 {/* Number bubble */}
-                <div className="process-number relative z-20 flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-lg sm:text-xl border-4 border-secondary shadow-lg">
+                <div className="process-number relative z-20 flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-xl sm:text-2xl border-4 border-secondary shadow-[0_0_20px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_40px_rgba(59,130,246,0.8)]">
                   {step.number}
                 </div>
 
-                {/* Content card */}
+                {/* Card */}
                 <div
-                  className={`process-card mt-6 md:mt-0 w-full md:w-[45%] p-6 sm:p-8 bg-card/70 backdrop-blur-sm rounded-2xl border border-border shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${
+                  className={`process-card mt-8 md:mt-0 w-full md:w-[45%] p-8 sm:p-10 bg-card/80 backdrop-blur-xl rounded-2xl border border-border shadow-xl hover:shadow-2xl transition-transform duration-500 transform hover:-translate-y-2 hover:rotate-[1deg] hover:scale-[1.02] ${
                     index % 2 === 0
-                      ? 'md:mr-auto md:pr-10'
-                      : 'md:ml-auto md:pl-10'
+                      ? "md:mr-auto md:pr-10"
+                      : "md:ml-auto md:pl-10"
                   }`}
                 >
-                  <h3 className="text-2xl font-semibold text-foreground mb-2">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-base text-muted-foreground leading-relaxed">
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -166,8 +178,8 @@ const Process: React.FC = () => {
         </div>
       </div>
 
-      {/* Soft glowing background */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)]"></div>
+      {/* Ambient glow */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12)_0%,transparent_80%)] blur-3xl"></div>
     </section>
   );
 };
