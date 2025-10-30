@@ -40,18 +40,16 @@ const Process: React.FC = () => {
 
     const processSteps = gsap.utils.toArray(".process-step-item");
 
-    // Title fade + lift
+    // Title fade in
     gsap.from(titleRef.current, {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top 80%",
-        toggleActions: "play none none reverse",
       },
       opacity: 0,
-      y: -40,
-      scale: 0.95,
-      duration: 1,
-      ease: "power4.out",
+      y: 40,
+      duration: 1.2,
+      ease: "power3.out",
     });
 
     // Vertical timeline glowing progress
@@ -71,40 +69,37 @@ const Process: React.FC = () => {
       }
     );
 
-    // Animate steps in stagger
+    // Animate each step smoothly
     processSteps.forEach((step: any, index) => {
       const card = step.querySelector(".process-card");
       const number = step.querySelector(".process-number");
       const isOdd = index % 2 !== 0;
 
-      // Card 3D float-in
+      // Floating card animation
       gsap.from(card, {
-        scrollTrigger: {
-          trigger: step,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        x: isOdd ? 120 : -120,
-        rotateY: isOdd ? 25 : -25,
-        rotateX: 10,
-        duration: 1.2,
-        ease: "power3.out",
-      });
-
-      // Number pop-in with glow
-      gsap.from(number, {
         scrollTrigger: {
           trigger: step,
           start: "top 90%",
           toggleActions: "play none none reverse",
         },
-        scale: 0.4,
         opacity: 0,
-        filter: "blur(4px)",
-        duration: 0.7,
+        y: 60,
+        x: isOdd ? 40 : -40,
+        rotateY: isOdd ? 10 : -10,
+        duration: 1.1,
+        ease: "power3.out",
+      });
+
+      // Subtle number pop
+      gsap.from(number, {
+        scrollTrigger: {
+          trigger: step,
+          start: "top 95%",
+        },
+        opacity: 0,
+        scale: 0.6,
+        duration: 0.8,
         ease: "back.out(1.8)",
-        delay: 0.1,
       });
     });
 
@@ -116,12 +111,12 @@ const Process: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-36 bg-gradient-to-b from-secondary via-secondary/80 to-background text-secondary-foreground overflow-hidden perspective-[1200px]"
+      className="relative py-24 md:py-36 bg-gradient-to-b from-secondary via-secondary/70 to-background text-secondary-foreground overflow-hidden"
     >
-      <div className="container mx-auto px-6 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Title */}
         <div ref={titleRef} className="text-center mb-20">
-          <h2 className="text-5xl md:text-6xl font-extrabold text-foreground drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]">
+          <h2 className="text-4xl md:text-6xl font-extrabold text-foreground drop-shadow-[0_3px_6px_rgba(0,0,0,0.25)]">
             Unser Prozess
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto leading-relaxed">
@@ -138,11 +133,11 @@ const Process: React.FC = () => {
           {/* Animated glowing progress line */}
           <div
             ref={timelineProgressRef}
-            className="absolute top-0 left-[2.1rem] md:left-1/2 w-[4px] h-full bg-gradient-to-b from-primary via-primary/80 to-transparent rounded-full shadow-[0_0_20px_rgba(59,130,246,0.6)] -translate-x-1/2"
+            className="absolute top-0 left-[2.1rem] md:left-1/2 w-[4px] h-full bg-gradient-to-b from-primary via-primary/70 to-transparent rounded-full shadow-[0_0_30px_rgba(59,130,246,0.5)] -translate-x-1/2"
           ></div>
 
           {/* Steps */}
-          <div className="flex flex-col space-y-24 md:space-y-32 relative z-10">
+          <div className="flex flex-col space-y-20 md:space-y-28 relative z-10">
             {steps.map((step, index) => (
               <div
                 key={index}
@@ -153,13 +148,13 @@ const Process: React.FC = () => {
                 }`}
               >
                 {/* Number bubble */}
-                <div className="process-number relative z-20 flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-xl sm:text-2xl border-4 border-secondary shadow-[0_0_20px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_40px_rgba(59,130,246,0.8)]">
+                <div className="process-number relative z-20 flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-xl sm:text-2xl border-4 border-secondary shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_40px_rgba(59,130,246,0.7)]">
                   {step.number}
                 </div>
 
                 {/* Card */}
                 <div
-                  className={`process-card mt-8 md:mt-0 w-full md:w-[45%] p-8 sm:p-10 bg-card/80 backdrop-blur-xl rounded-2xl border border-border shadow-xl hover:shadow-2xl transition-transform duration-500 transform hover:-translate-y-2 hover:rotate-[1deg] hover:scale-[1.02] ${
+                  className={`process-card mt-8 md:mt-0 w-full md:w-[45%] p-8 sm:p-10 bg-card/80 backdrop-blur-2xl rounded-2xl border border-border/50 shadow-xl hover:shadow-2xl transition-transform duration-500 transform hover:-translate-y-2 hover:scale-[1.02] ${
                     index % 2 === 0
                       ? "md:mr-auto md:pr-10"
                       : "md:ml-auto md:pl-10"
@@ -179,7 +174,7 @@ const Process: React.FC = () => {
       </div>
 
       {/* Ambient glow */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12)_0%,transparent_80%)] blur-3xl"></div>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_80%)] blur-3xl"></div>
     </section>
   );
 };
