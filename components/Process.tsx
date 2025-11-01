@@ -112,7 +112,7 @@ const Process: React.FC = () => {
     <section
       ref={sectionRef}
       className="relative py-24 md:py-36 bg-gradient-to-b from-secondary via-secondary/70 to-background text-secondary-foreground overflow-hidden"
-    >
+    > 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Title */}
         <div ref={titleRef} className="text-center mb-20">
