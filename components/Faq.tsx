@@ -117,9 +117,9 @@ const Faq: React.FC = () => {
     <section ref={sectionRef} className="py-20 md:py-32 bg-background">
       <div className="container mx-auto px-6">
         <div ref={titleRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">Häufig gestellte Fragen</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-foreground">Frequently Asked Questions</h2>
           <p className="text-lg md:text-xl text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Antworten auf die wichtigsten Fragen rund um Ihr Webprojekt.
+            Answers to the most important questions regarding your web project.
           </p>
         </div>
         <div ref={listRef} className="max-w-3xl mx-auto">
