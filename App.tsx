@@ -51,7 +51,7 @@ const App: React.FC = () => {
                 <main className="pt-20">
                     <Hero id="home" />
                     <LazyLoad placeholderHeight="90vh"><VerticalMarqueeSection /></LazyLoad>
-                    <LazyLoad placeholderHeight="800px"><InteractiveMarqueeSection id="webseiten" /></LazyLoad>
+                    {/* <LazyLoad placeholderHeight="800px"><InteractiveMarqueeSection id="webseiten" /></LazyLoad> */}
                     <LazyLoad placeholderHeight="700px"><Services id="leistungen" /></LazyLoad>
                     <LazyLoad placeholderHeight="1000px"><Advantages id="vorteile" /></LazyLoad>
                     <LazyLoad placeholderHeight="800px"><ValueProps /></LazyLoad>

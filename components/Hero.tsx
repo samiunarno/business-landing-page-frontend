@@ -62,13 +62,13 @@ const Hero: React.FC<HeroProps> = ({ id }) => {
             {/* Content */}
             <div className="container mx-auto px-6 text-center z-20">
                 <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-foreground leading-tight mb-6">
-                    Wir erstellen <span className="text-primary">Premium</span> Webseiten
+                    Build Your Future with<span className="text-primary">Career</span>  Coaching
                 </h1>
                 <p className="max-w-5xl mx-auto text-lg md:text-xl text-muted-foreground mb-10">
-                    Professionelles Webdesign, das Ihre Marke stärkt, Besucher fesselt und Ihr Geschäft voranbringt.
+                    AI-powered guidance for job applications, interviews, and workplace integration — personalized to your goals and your journey.
                 </p>
                 <a href="#kontakt" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-10 rounded-lg text-lg transition-all duration-300 transform hover:scale-110 shadow-lg shadow-primary/20">
-                    Jetzt starten
+                    Contact
                 </a>
             </div>
         </section>
