@@ -114,5 +114,5 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 <br/>
 <div align="center">
-  Made By Bushra Jannath and a passion for clean architecture.
+  Made By Bushra 
 </div>
