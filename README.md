@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://picsum.photos/1200/400?grayscale&blur=2&random=2" alt="Harbor at Dusk" style="border-radius: 12px; max-width: 100%; height: auto;"/>
   <br/><br/>
-  <h1><b>Marine Management & Port Administration System</b></h1>
+  <h1><b>🚢 Marine Management & Port Administration System 🚢</b></h1>
   <p>An Architectural Deep-Dive into Advanced Object-Oriented Java</p>
   <p>
     <img src="https://img.shields.io/badge/Java-11%2B-blue?style=for-the-badge&logo=java" alt="Java 11+">
